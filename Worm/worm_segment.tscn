@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://b5ydby18qentx"]
+[gd_scene load_steps=2 format=3 uid="uid://dntrbapmhk5ky"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jfj8w"]
 height = 50.0

@@ -1,6 +1,6 @@
 extends RigidBody2D
 
-var body_segment = preload("res://worm_segment.tscn")
+var body_segment = preload("worm_segment.tscn")
 
 @onready var stop_force_timer: Timer = $StopForce
 var worm_speed = 6000
@@ -39,3 +39,8 @@ func add_segment():
 func _on_stop_force_timeout():
 	constant_force = Vector2(0, 0)
 	stop_force_timer.stop()
+
+
+func _on_body_entered(body):
+	if body.name == "Host":
+		print("Attack")
