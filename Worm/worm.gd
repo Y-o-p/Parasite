@@ -5,6 +5,7 @@ var body_segment = preload("worm_segment.tscn")
 @onready var stop_force_timer: Timer = $StopForce
 var worm_speed = 6000
 @onready var segments = [self]
+@onready var head: CollisionShape2D = $CollisionShape2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -26,13 +27,9 @@ func _physics_process(delta):
 
 func add_segment():
 	var segment = body_segment.instantiate()
-	var joint: PinJoint2D = PinJoint2D.new()
-	joint.softness = 0
-	joint.bias = 1
-	segments[-1].get_node("CollisionShape2D/Tail").add_child(segment)
-	segments[-1].get_node("CollisionShape2D/Tail").add_child(joint)
+	var joint: PinJoint2D = segment.get_node("Joint")
 	joint.node_a = segments[-1].get_path()
-	joint.node_b = segment.get_path()
+	segments[-1].get_node("CollisionShape2D/Tail").add_child(segment)
 	segments.append(segment)
 
 
@@ -43,4 +40,19 @@ func _on_stop_force_timeout():
 
 func _on_body_entered(body):
 	if body.name == "Host":
-		print("Attack")
+		latch(body)
+
+func latch(body):
+	var joint: PinJoint2D = PinJoint2D.new()
+	set_head_invisible(true)
+	set_segment_non_collidable(1)
+	body.add_child(joint)
+	joint.node_a = body.get_path()
+	joint.node_b = segments[1].get_path()
+
+func set_head_visible(vis):
+	head.visible = vis
+	set_collision_layer_value(0, vis)
+
+func set_segment_non_collidable(index):
+	pass
