@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://c18nefjr6l6os"]
+
+[ext_resource type="PackedScene" uid="uid://bb2f5olv1g3q6" path="res://worm_head.tscn" id="1_5blwd"]
+[ext_resource type="Script" path="res://worm.gd" id="1_cbbke"]
+[ext_resource type="PackedScene" uid="uid://b5ydby18qentx" path="res://worm_segment.tscn" id="2_nmcal"]
+
+[node name="Worm" type="Node2D"]
+script = ExtResource("1_cbbke")
+
+[node name="WormHead" parent="." instance=ExtResource("1_5blwd")]
+linear_velocity = Vector2(50, -1)
+linear_damp = 2.0
+
+[node name="WormSegment" parent="." instance=ExtResource("2_nmcal")]
+position = Vector2(0, 51)
+
+[node name="PinJoint2D" type="PinJoint2D" parent="."]
+position = Vector2(0, 16)
+node_a = NodePath("../WormHead")
+node_b = NodePath("../WormSegment")
+bias = 0.397
+disable_collision = false
