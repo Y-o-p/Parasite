@@ -8,9 +8,6 @@ linear_damp = 4.81
 angular_damp = 1.0
 metadata/_edit_lock_ = true
 
-[node name="Joint" type="PinJoint2D" parent="."]
-node_b = NodePath("..")
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 27)
 shape = SubResource("CapsuleShape2D_jfj8w")
@@ -23,3 +20,7 @@ polygon = PackedVector2Array(-9, -34, 9, -34, 9, 34, -9, 34)
 
 [node name="Tail" type="Node2D" parent="CollisionShape2D"]
 position = Vector2(0, 24)
+
+[node name="Joint" type="PinJoint2D" parent="."]
+node_b = NodePath("..")
+bias = 0.9

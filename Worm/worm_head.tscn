@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://qdkg3cn5meyp"]
+
+[ext_resource type="PackedScene" uid="uid://drc1lwia5aj3d" path="res://Worm/worm_tail.tscn" id="1_5wqif"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vag7m"]
+
+[node name="WormHead" type="RigidBody2D"]
+mass = 1.92
+max_contacts_reported = 1
+contact_monitor = true
+linear_damp = 1.924
+angular_damp = 1.924
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_vag7m")
+
+[node name="Polygon2D" type="Polygon2D" parent="CollisionShape2D"]
+position = Vector2(4.76837e-07, -1.90735e-06)
+scale = Vector2(1, 0.441176)
+color = Color(0.917647, 0.952941, 0, 1)
+polygon = PackedVector2Array(-9, -34, 9, -34, 9, 34, -9, 34)
+
+[node name="Nose" type="Node2D" parent="CollisionShape2D"]
+position = Vector2(0, -15)
+
+[node name="WormTail" parent="." node_paths=PackedStringArray("latched_node") instance=ExtResource("1_5wqif")]
+position = Vector2(0, 15)
+latched_node = NodePath("..")
