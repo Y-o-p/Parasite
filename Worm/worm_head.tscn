@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://qdkg3cn5meyp"]
+[gd_scene load_steps=4 format=3 uid="uid://qdkg3cn5meyp"]
 
 [ext_resource type="PackedScene" uid="uid://drc1lwia5aj3d" path="res://Worm/worm_tail.tscn" id="1_5wqif"]
+[ext_resource type="Script" path="res://Worm/worm_head.gd" id="1_jbqrg"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vag7m"]
 
@@ -10,6 +11,7 @@ max_contacts_reported = 1
 contact_monitor = true
 linear_damp = 1.924
 angular_damp = 1.924
+script = ExtResource("1_jbqrg")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_vag7m")
@@ -26,3 +28,8 @@ position = Vector2(0, -15)
 [node name="WormTail" parent="." node_paths=PackedStringArray("latched_node") instance=ExtResource("1_5wqif")]
 position = Vector2(0, 15)
 latched_node = NodePath("..")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.5, 0.5)
+process_callback = 0
+position_smoothing_enabled = true

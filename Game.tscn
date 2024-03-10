@@ -18,10 +18,5 @@ polygon = PackedVector2Array(-215, -81, 463, -68, 457, 122, -421, 96)
 
 [node name="Worm" parent="." instance=ExtResource("1_4rpfn")]
 
-[node name="Camera2D" type="Camera2D" parent="Worm"]
-zoom = Vector2(0.5, 0.5)
-process_callback = 0
-position_smoothing_enabled = true
-
 [node name="Host" parent="." instance=ExtResource("2_xxbua")]
 position = Vector2(-295, -114)

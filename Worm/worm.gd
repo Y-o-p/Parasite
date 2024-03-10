@@ -1,4 +1,4 @@
-extends Node2D
+extends Node
 
 var HEAD = preload("worm_head.tscn")
 var TAIL = preload("worm_tail.tscn")
@@ -23,13 +23,12 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("ui_right"):
 		unlatch()
 	if Input.is_action_just_pressed("ui_down") and stop_force_timer.is_stopped():
-		var dir: Vector2 = (worm.get_node("CollisionShape2D/Nose").global_position - global_position).normalized()
-		var desired_dir: Vector2 = (get_global_mouse_position() - worm.get_node("CollisionShape2D/Nose").global_position).normalized()
+		print(stop_force_timer.time_left)
+		var dir: Vector2 = (worm.get_node("CollisionShape2D/Nose").global_position - worm.global_position).normalized()
+		var desired_dir: Vector2 = (worm.get_global_mouse_position() - worm.get_node("CollisionShape2D/Nose").global_position).normalized()
 		worm.add_constant_force(worm_speed * len(worm.get_node("WormTail").segments) * desired_dir)
-		$StopForce.start()
+		stop_force_timer.start()
 
-func _on_stop_force_timeout():
-	stop_force_timer.stop()
 
 func _on_body_entered(body):
 	if body.name == "Host":
@@ -46,5 +45,7 @@ func latch(body):
 func unlatch():
 	add_child(worm)
 	
-
-
+func _on_stop_force_timeout():
+	print("stopped")
+	stop_force_timer.stop()
+	worm.constant_force = Vector2(0, 0)
