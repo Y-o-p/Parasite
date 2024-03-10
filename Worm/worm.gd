@@ -41,6 +41,9 @@ func latch(body):
 	if worm.is_inside_tree():
 		var host_tail = TAIL.instantiate()
 		body.add_child(host_tail)
+		var entry_angle = body.global_position.angle_to_point(worm.contact_position)
+		print(worm.contact_position - body.global_position, entry_angle)
+		host_tail.rotate(-PI/2.0 + entry_angle)
 		host_tail.latch(body)
 		hosts.append(body)
 		remove_child(worm)
@@ -53,7 +56,6 @@ func unlatch():
 	
 func _on_stop_force_timeout():
 	worm.constant_force = Vector2(0, 0)
-
 
 func _on_kill_timeout():
 	var added_length = 0
