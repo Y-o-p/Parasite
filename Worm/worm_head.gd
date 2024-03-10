@@ -2,6 +2,7 @@ extends RigidBody2D
 
 
 var contact_position: Vector2 = Vector2()
+@onready var tail = $WormTail
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

@@ -6,7 +6,7 @@ height = 50.0
 [node name="WormSegment" type="RigidBody2D"]
 collision_mask = 2
 linear_damp = 4.81
-angular_damp = 1.0
+angular_damp_mode = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 27)
@@ -23,5 +23,4 @@ position = Vector2(0, 24)
 
 [node name="Joint" type="PinJoint2D" parent="."]
 node_b = NodePath("..")
-motor_enabled = true
-motor_target_velocity = 0.265988
+bias = 0.9

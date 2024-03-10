@@ -15,6 +15,7 @@ func _ready():
 	worm = HEAD.instantiate()
 	worm.connect("body_entered", _on_body_entered)
 	add_child(worm)
+	worm.tail.set_deferred("wiggle_speed", 15)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -23,12 +24,15 @@ func _process(delta):
 func _physics_process(delta):
 	if Input.is_action_just_pressed("ui_right"):
 		unlatch()
-	if Input.is_action_just_pressed("ui_down") and stop_force_timer.is_stopped():
+	if Input.is_action_just_released("fling") and stop_force_timer.is_stopped():
 		fling(worm_speed)
+	if Input.is_action_just_pressed("squash"):
+		worm.tail.wiggle = worm.tail.Wiggle.SQUASH
 		
 func fling(speed):
 	var dir: Vector2 = (worm.get_node("CollisionShape2D/Nose").global_position - worm.global_position).normalized()
 	var desired_dir: Vector2 = (worm.get_global_mouse_position() - worm.get_node("CollisionShape2D/Nose").global_position).normalized()
+	worm.tail.wiggle = worm.tail.Wiggle.NONE
 	worm.add_constant_force(speed * len(worm.get_node("WormTail").segments) * desired_dir)
 	stop_force_timer.start()
 
@@ -40,6 +44,9 @@ func latch(body):
 	print("Latching")
 	if worm.is_inside_tree():
 		var host_tail = TAIL.instantiate()
+		host_tail.wiggle = worm.tail.Wiggle.OSCILLATE
+		host_tail.segment_count = len(worm.tail.segments)
+		host_tail.collidable = false
 		body.add_child(host_tail)
 		var entry_angle = body.global_position.angle_to_point(worm.contact_position)
 		print(worm.contact_position - body.global_position, entry_angle)
@@ -62,6 +69,7 @@ func unlatch():
 	
 func _on_stop_force_timeout():
 	worm.constant_force = Vector2(0, 0)
+	worm.tail.wiggle = false
 
 func _on_kill_timeout():
 	var added_length = 0
@@ -71,5 +79,5 @@ func _on_kill_timeout():
 	hosts.clear()
 	
 	unlatch()
-	worm.get_node("WormTail").add_segments(added_length)
+	worm.tail.add_segments(added_length)
 	call_deferred("fling", worm_speed * 1.5)
