@@ -11,15 +11,27 @@ func _ready():
 	if latched_node != null:
 		latch(latched_node)
 
+func add_segments(count):
+	call_deferred("add_segment")
+	if count > 1:
+		call_deferred("add_segments", count - 1)
+
 func add_segment():
 	var segment = body_segment.instantiate()
+	var joint: PinJoint2D = segment.get_node("Joint")
 	if len(segments) > 0:
-		var joint: PinJoint2D = segment.get_node("Joint")
 		joint.node_a = segments[-1].get_path()
 		segments[-1].get_node("CollisionShape2D/Tail").add_child(segment)
+		#segments[-1].get_node("CollisionShape2D/Tail").call_deferred("add_child", segment)
+		#segments[-1].get_node("CollisionShape2D/Tail").add_child(segment)
+	else:
+		add_child(segment)
 	segments.append(segment)
-	add_child(segment)
 
 func latch(body):
 	latched_node = body
 	segments[0].get_node("Joint").node_a = latched_node.get_path()
+
+func set_freeze(f):
+	for segment in segments:
+		segment.set_deferred("freeze", f)

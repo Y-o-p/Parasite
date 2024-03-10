@@ -15,6 +15,11 @@ run/main_scene="res://Game.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 
+[layer_names]
+
+2d_physics/layer_1="Worm"
+2d_physics/layer_2="Host"
+
 [physics]
 
 common/physics_ticks_per_second=120
