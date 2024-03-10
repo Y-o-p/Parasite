@@ -3,8 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://bb2f5olv1g3q6" path="res://Worm/worm.tscn" id="1_4rpfn"]
 [ext_resource type="PackedScene" uid="uid://lg7ffl58nx44" path="res://host.tscn" id="2_xxbua"]
 
-[node name="Game" type="Node2D"]
-position = Vector2(548, 514)
+[node name="Game" type="Node"]
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
 position = Vector2(-36, 249)
@@ -20,3 +19,6 @@ polygon = PackedVector2Array(-215, -81, 463, -68, 457, 122, -421, 96)
 
 [node name="Host" parent="." instance=ExtResource("2_xxbua")]
 position = Vector2(-295, -114)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.5, 0.5)

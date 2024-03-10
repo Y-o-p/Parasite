@@ -28,8 +28,3 @@ position = Vector2(0, -15)
 [node name="WormTail" parent="." node_paths=PackedStringArray("latched_node") instance=ExtResource("1_5wqif")]
 position = Vector2(0, 15)
 latched_node = NodePath("..")
-
-[node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(0.5, 0.5)
-process_callback = 0
-position_smoothing_enabled = true

@@ -8,5 +8,11 @@ script = ExtResource("1_cbbke")
 [node name="StopForce" type="Timer" parent="."]
 process_callback = 0
 wait_time = 0.5
+one_shot = true
+
+[node name="Kill" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
 
 [connection signal="timeout" from="StopForce" to="." method="_on_stop_force_timeout"]
+[connection signal="timeout" from="Kill" to="." method="_on_kill_timeout"]
