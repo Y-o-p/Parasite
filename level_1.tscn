@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://v0hmwklukuey"]
+
+[ext_resource type="PackedScene" uid="uid://bb2f5olv1g3q6" path="res://Worm/worm.tscn" id="1_metxp"]
+
+[node name="Level1" type="Node2D"]
+
+[node name="Worm" parent="." instance=ExtResource("1_metxp")]

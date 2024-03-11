@@ -7,11 +7,12 @@
 
 [node name="WormHead" type="RigidBody2D"]
 collision_mask = 2
-mass = 11.1
+mass = 4.48
+can_sleep = false
 max_contacts_reported = 1
 contact_monitor = true
 linear_damp = 1.924
-angular_damp = 14.263
+angular_damp = 10.452
 script = ExtResource("1_jbqrg")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

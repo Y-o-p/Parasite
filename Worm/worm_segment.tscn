@@ -1,4 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://dntrbapmhk5ky"]
+[gd_scene load_steps=3 format=3 uid="uid://dntrbapmhk5ky"]
+
+[ext_resource type="Script" path="res://Worm/worm_segment.gd" id="1_tof58"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jfj8w"]
 height = 50.0
@@ -6,7 +8,8 @@ height = 50.0
 [node name="WormSegment" type="RigidBody2D"]
 collision_mask = 2
 linear_damp = 4.81
-angular_damp_mode = 1
+angular_damp = 4.447
+script = ExtResource("1_tof58")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 27)
