@@ -1,18 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://lg7ffl58nx44"]
+[gd_scene load_steps=4 format=3 uid="uid://lg7ffl58nx44"]
 
 [ext_resource type="Script" path="res://host.gd" id="1_f55bx"]
+[ext_resource type="Texture2D" uid="uid://dgxhaimd0v8nd" path="res://man.svg" id="2_mhwe6"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_v2pys"]
 radius = 36.0
-height = 106.0
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_j4sdv"]
-size = Vector2(63.32, 102.91)
-orientation = 2
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_i71v0"]
-radius = 10.68
-height = 64.439
+height = 126.0
 
 [node name="Host" type="RigidBody2D"]
 collision_layer = 2
@@ -25,22 +18,7 @@ script = ExtResource("1_f55bx")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_v2pys")
 
-[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
-position = Vector2(-2, -4)
-mesh = SubResource("PlaneMesh_j4sdv")
-
-[node name="LeftHip" type="Node2D" parent="."]
-position = Vector2(-23, 41)
-rotation = 0.305433
-
-[node name="Femur" type="MeshInstance2D" parent="LeftHip"]
-position = Vector2(0, 27)
-mesh = SubResource("CapsuleMesh_i71v0")
-
-[node name="Knee" type="Node2D" parent="LeftHip/Femur"]
-position = Vector2(0, 22)
-rotation = -0.380482
-
-[node name="Tibia" type="MeshInstance2D" parent="LeftHip/Femur/Knee"]
-position = Vector2(0, 21)
-mesh = SubResource("CapsuleMesh_i71v0")
+[node name="Man" type="Sprite2D" parent="."]
+position = Vector2(0, 24)
+scale = Vector2(0.236928, 0.236928)
+texture = ExtResource("2_mhwe6")

@@ -5,23 +5,10 @@
 
 [node name="Game" type="Node"]
 
-[node name="Polygon2D" type="Polygon2D" parent="."]
-position = Vector2(-36, 249)
-polygon = PackedVector2Array(-214, -79, 461, -68, 456, 121, -420, 96)
-metadata/_edit_group_ = true
-
-[node name="StaticBody2D" type="StaticBody2D" parent="Polygon2D"]
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Polygon2D/StaticBody2D"]
-polygon = PackedVector2Array(-215, -81, 463, -68, 457, 122, -421, 96)
-
 [node name="Worm" parent="." instance=ExtResource("1_4rpfn")]
 
 [node name="Host" parent="." instance=ExtResource("2_xxbua")]
 position = Vector2(-295, -114)
-
-[node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(0.5, 0.5)
 
 [node name="Host2" parent="." instance=ExtResource("2_xxbua")]
 position = Vector2(403, -448)

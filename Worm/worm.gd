@@ -6,6 +6,7 @@ var TAIL = preload("worm_tail.tscn")
 @onready var stop_force_timer: Timer = $StopForce
 var worm_speed = 6000
 @onready var head: Polygon2D = $CollisionShape2D/Polygon2D
+@onready var camera: Camera2D = $Camera
 
 var hosts = []
 var worm: RigidBody2D
@@ -15,6 +16,7 @@ func _ready():
 	worm = HEAD.instantiate()
 	worm.connect("body_entered", _on_body_entered)
 	add_child(worm)
+	camera.target = worm
 	worm.tail.set_deferred("wiggle_speed", 15)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -43,6 +45,7 @@ func _on_body_entered(body: PhysicsBody2D):
 func latch(body):
 	print("Latching")
 	if worm.is_inside_tree():
+		camera.target = body
 		var host_tail = TAIL.instantiate()
 		host_tail.latched_node = body
 		host_tail.wiggle = Parasite.Wiggle.OSCILLATE
@@ -74,6 +77,7 @@ func _on_stop_force_timeout():
 
 func _on_kill_timeout():
 	var added_length = 0
+	camera.target = worm
 	for host in hosts:
 		host.die()
 		added_length += 3
