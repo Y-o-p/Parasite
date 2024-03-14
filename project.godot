@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Parasite"
-run/main_scene="res://Game.tscn"
+run/main_scene="res://Levels/Game.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -42,6 +42,7 @@ fling={
 
 2d_physics/layer_1="Worm"
 2d_physics/layer_2="Host"
+2d_physics/layer_3="Wall"
 
 [physics]
 

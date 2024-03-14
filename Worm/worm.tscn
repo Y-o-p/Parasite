@@ -1,9 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://bb2f5olv1g3q6"]
+[gd_scene load_steps=4 format=3 uid="uid://bb2f5olv1g3q6"]
 
 [ext_resource type="Script" path="res://Worm/worm.gd" id="1_cbbke"]
 [ext_resource type="PackedScene" uid="uid://bj6ifpnks1yf4" path="res://camera.tscn" id="2_dc3rx"]
+[ext_resource type="PackedScene" uid="uid://b0qmqpek7g516" path="res://dialogue.tscn" id="3_rlope"]
 
-[node name="Worm" type="Node"]
+[node name="Worm" type="Node2D"]
 script = ExtResource("1_cbbke")
 
 [node name="Camera" parent="." instance=ExtResource("2_dc3rx")]
@@ -17,5 +18,14 @@ one_shot = true
 wait_time = 3.0
 one_shot = true
 
+[node name="Dialogue" parent="." instance=ExtResource("3_rlope")]
+offset_top = -116.0
+offset_right = 1.0
+offset_bottom = -93.0
+dialogue = Array[String](["It is safe inside", "You are outgrowing your home", "On those nearby, FEED", "Hold LMB and release to move"])
+
 [connection signal="timeout" from="StopForce" to="." method="_on_stop_force_timeout"]
 [connection signal="timeout" from="Kill" to="." method="_on_kill_timeout"]
+[connection signal="finished_line" from="Dialogue" to="." method="_on_dialogue_finished_line"]
+[connection signal="out_of_dialogue" from="Dialogue" to="." method="_on_dialogue_out_of_dialogue"]
+[connection signal="started_line" from="Dialogue" to="." method="_on_dialogue_started_line"]

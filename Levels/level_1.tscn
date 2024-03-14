@@ -1,0 +1,23 @@
+[gd_scene load_steps=6 format=3 uid="uid://v0hmwklukuey"]
+
+[ext_resource type="PackedScene" uid="uid://bb2f5olv1g3q6" path="res://Worm/worm.tscn" id="1_metxp"]
+[ext_resource type="PackedScene" uid="uid://lg7ffl58nx44" path="res://host.tscn" id="2_lo7do"]
+[ext_resource type="PackedScene" uid="uid://bnpc0idfk0y5x" path="res://wall.tscn" id="3_4mkuu"]
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_nkv6l"]
+scenes/1/scene = ExtResource("3_4mkuu")
+scenes/2/scene = ExtResource("2_lo7do")
+
+[sub_resource type="TileSet" id="TileSet_dbdwh"]
+tile_size = Vector2i(128, 128)
+sources/0 = SubResource("TileSetScenesCollectionSource_nkv6l")
+
+[node name="Level1" type="Node2D"]
+
+[node name="Worm" parent="." instance=ExtResource("1_metxp")]
+position = Vector2(-512, 64)
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_dbdwh")
+format = 2
+layer_0/tile_data = PackedInt32Array(-65537, 0, 65536, -65538, 0, 65536, -131070, 0, 65536, -131069, 0, 65536, -131068, 0, 65536, -65539, 0, 65536, -65540, 0, 65536, -65541, 0, 65536, -65542, 0, 65536, -6, 0, 65536, 65530, 0, 65536, 131066, 0, 65536, 196602, 0, 65536, 196603, 0, 65536, 196604, 0, 65536, 196605, 0, 65536, 196606, 0, 65536, 196607, 0, 65536, 131072, 0, 65536, 131073, 0, 65536, 131078, 0, 65536, 65542, 0, 65536, 6, 0, 65536, -65530, 0, 65536, -131066, 0, 65536, -131067, 0, 65536, 4, 0, 131072, -65534, 0, 65536, 131074, 0, 65536, 65538, 0, 65536, 131075, 0, 65536, 131076, 0, 65536, 131077, 0, 65536, -196606, 0, 65536, -262142, 0, 65536, -327678, 0, 65536, -131073, 0, 65536, -196609, 0, 65536, -262145, 0, 65536, -327681, 0, 65536, -393216, 0, 65536, -393215, 0, 65536, -393214, 0, 65536, -262143, 0, 131072, -262144, 0, 131072)

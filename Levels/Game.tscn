@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://0r7l3ijb08em"]
+
+[ext_resource type="PackedScene" uid="uid://bb2f5olv1g3q6" path="res://Worm/worm.tscn" id="1_im2di"]
+[ext_resource type="PackedScene" uid="uid://lg7ffl58nx44" path="res://host.tscn" id="2_e54wj"]
+
+[node name="Game" type="Node"]
+
+[node name="Worm" parent="." instance=ExtResource("1_im2di")]
+
+[node name="Host" parent="." instance=ExtResource("2_e54wj")]
+position = Vector2(-295, -114)
+
+[node name="Host2" parent="." instance=ExtResource("2_e54wj")]
+position = Vector2(403, -448)
+
+[node name="Host3" parent="." instance=ExtResource("2_e54wj")]
+position = Vector2(-916, -482)
