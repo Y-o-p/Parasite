@@ -6,7 +6,7 @@ extends Camera2D
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	if target:
-		position = target.position
+		global_position = target.global_position
 
 func _physics_process(delta):
 	if !target:
@@ -14,4 +14,4 @@ func _physics_process(delta):
 	
 	var new_zoom = lerp(zoom.x, desired_size, 0.01)
 	set_zoom(Vector2(new_zoom, new_zoom))
-	position = lerp(position, target.position, 0.08)
+	global_position = lerp(global_position, target.global_position, 0.08)

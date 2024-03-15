@@ -8,6 +8,7 @@
 script = ExtResource("1_cbbke")
 
 [node name="Camera" parent="." instance=ExtResource("2_dc3rx")]
+top_level = true
 
 [node name="StopForce" type="Timer" parent="."]
 process_callback = 0
