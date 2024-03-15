@@ -1,0 +1,18 @@
+[gd_scene load_steps=6 format=3 uid="uid://dk7kd77q2hbi0"]
+
+[ext_resource type="PackedScene" uid="uid://bnpc0idfk0y5x" path="res://wall.tscn" id="1_ootgv"]
+[ext_resource type="PackedScene" uid="uid://lg7ffl58nx44" path="res://host.tscn" id="2_f870d"]
+[ext_resource type="Script" path="res://Levels/level.gd" id="3_sfyxt"]
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_hfhb8"]
+scenes/1/scene = ExtResource("1_ootgv")
+scenes/2/scene = ExtResource("2_f870d")
+
+[sub_resource type="TileSet" id="TileSet_4dq6d"]
+tile_size = Vector2i(128, 128)
+sources/0 = SubResource("TileSetScenesCollectionSource_hfhb8")
+
+[node name="Level" type="TileMap"]
+tile_set = SubResource("TileSet_4dq6d")
+format = 2
+script = ExtResource("3_sfyxt")

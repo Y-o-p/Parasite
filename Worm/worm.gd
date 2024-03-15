@@ -62,7 +62,6 @@ func _on_body_entered(body: PhysicsBody2D):
 		latch(body)
 
 func latch(body):
-	print("Latching")
 	if worm.is_inside_tree():
 		camera.target = body
 		var host_tail = TAIL.instantiate()
@@ -72,7 +71,6 @@ func latch(body):
 		host_tail.collidable = false
 		body.add_child(host_tail)
 		var entry_angle = body.global_position.angle_to_point(worm.contact_position)
-		print(worm.contact_position - body.global_position, entry_angle)
 		host_tail.rotate(-PI/2.0 + entry_angle)
 		host_tail.latch(body)
 		hosts.append(body)
@@ -99,6 +97,7 @@ func _on_kill_timeout():
 	camera.target = worm
 	for host in hosts:
 		host.die()
+		Parasite.host_count -= 1
 		added_length += 3
 	hosts.clear()
 	

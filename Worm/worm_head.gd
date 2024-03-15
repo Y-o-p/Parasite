@@ -17,4 +17,4 @@ func _process(delta):
 func _integrate_forces(state):
 	if state.get_contact_count() > 0:
 		contact_position = state.get_contact_local_position(0)
-		print(contact_position)
+
