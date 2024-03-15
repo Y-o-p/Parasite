@@ -1,17 +1,209 @@
-[gd_scene load_steps=3 format=3 uid="uid://0r7l3ijb08em"]
+[gd_scene load_steps=9 format=3 uid="uid://0r7l3ijb08em"]
 
-[ext_resource type="PackedScene" uid="uid://bb2f5olv1g3q6" path="res://Worm/worm.tscn" id="1_im2di"]
-[ext_resource type="PackedScene" uid="uid://lg7ffl58nx44" path="res://host.tscn" id="2_e54wj"]
+[ext_resource type="Script" path="res://Levels/Game.gd" id="1_viy7h"]
+[ext_resource type="Shader" path="res://Levels/Game.gdshader" id="2_8fpnp"]
+
+[sub_resource type="SystemFont" id="SystemFont_6d3np"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6br5m"]
+shader = ExtResource("2_8fpnp")
+shader_parameter/gray_ratio = 0.0
+
+[sub_resource type="Animation" id="Animation_culvc"]
+resource_name = "next_level"
+length = 3.0
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(3),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"next_level"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("NextLevel/Level:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("NextLevel:color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1, 3),
+"transitions": PackedFloat32Array(1, 0, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_pqvq8"]
+resource_name = "death"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Gray:material:shader_parameter/gray_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Control/Death:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_h22vo"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Gray:material:shader_parameter/gray_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Control/Death:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8lo4y"]
+_data = {
+"RESET": SubResource("Animation_h22vo"),
+"death": SubResource("Animation_pqvq8"),
+"next_level": SubResource("Animation_culvc")
+}
 
 [node name="Game" type="Node"]
+script = ExtResource("1_viy7h")
 
-[node name="Worm" parent="." instance=ExtResource("1_im2di")]
+[node name="HUD" type="CanvasLayer" parent="."]
 
-[node name="Host" parent="." instance=ExtResource("2_e54wj")]
-position = Vector2(-295, -114)
+[node name="Control" type="Control" parent="HUD"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="Host2" parent="." instance=ExtResource("2_e54wj")]
-position = Vector2(403, -448)
+[node name="HostsLeft" type="Label" parent="HUD/Control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -81.0
+offset_right = 81.0
+offset_bottom = 58.0
+grow_horizontal = 2
+theme_override_fonts/font = SubResource("SystemFont_6d3np")
+theme_override_font_sizes/font_size = 42
+text = "Hosts: 3"
+horizontal_alignment = 1
 
-[node name="Host3" parent="." instance=ExtResource("2_e54wj")]
-position = Vector2(-916, -482)
+[node name="TimeRemaining" type="Label" parent="HUD/Control"]
+layout_mode = 1
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_font_sizes/font_size = 40
+text = "Time Remaining: 3.0"
+
+[node name="Death" type="Label" parent="HUD/Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -81.0
+offset_top = -29.0
+offset_right = 81.0
+offset_bottom = 29.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = SubResource("SystemFont_6d3np")
+theme_override_font_sizes/font_size = 42
+text = "You died.
+Press R to restart."
+horizontal_alignment = 1
+
+[node name="Gray" type="ColorRect" parent="HUD"]
+material = SubResource("ShaderMaterial_6br5m")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0)
+
+[node name="NextLevel" type="ColorRect" parent="HUD"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0)
+
+[node name="Level" type="Label" parent="HUD/NextLevel"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -66.5
+offset_top = -27.5
+offset_right = 66.5
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 40
+text = "Level 2"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../HUD")
+libraries = {
+"": SubResource("AnimationLibrary_8lo4y")
+}

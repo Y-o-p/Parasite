@@ -5,6 +5,7 @@ var TAIL = preload("worm_tail.tscn")
 var HOST = preload("res://host.tscn")
 
 @onready var stop_force_timer: Timer = $StopForce
+@onready var death_timer: Timer = $Death
 var worm_speed = 6000
 @onready var head: Polygon2D = $CollisionShape2D/Polygon2D
 @onready var camera: Camera2D = $Camera
@@ -14,6 +15,7 @@ var hosts = []
 var worm: RigidBody2D
 var gestating: bool = true
 var first_host: RigidBody2D
+var dead: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -36,13 +38,15 @@ func spawn():
 	worm.tail.set_deferred("wiggle_speed", 15)
 	gestating = false
 	remove_child(first_host)
+	death_timer.start()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
+	Parasite.time_remaining = death_timer.time_left
+	print(death_timer.time_left)
 	
 func _physics_process(delta):
-	if not gestating:
+	if not gestating and not dead:
 		if Input.is_action_just_pressed("ui_right"):
 			unlatch()
 		if Input.is_action_just_released("fling") and stop_force_timer.is_stopped():
@@ -62,7 +66,8 @@ func _on_body_entered(body: PhysicsBody2D):
 		latch(body)
 
 func latch(body):
-	if worm.is_inside_tree():
+	if worm.is_inside_tree() and not dead:
+		death_timer.stop()
 		camera.target = body
 		var host_tail = TAIL.instantiate()
 		host_tail.latched_node = body
@@ -87,6 +92,8 @@ func unlatch():
 	worm.set_deferred("freeze", false)
 	worm.get_node("WormTail").set_freeze(false)
 	add_child(worm)
+	if Parasite.host_count > 0:
+		death_timer.start()
 	
 func _on_stop_force_timeout():
 	worm.constant_force = Vector2(0, 0)
@@ -98,6 +105,8 @@ func _on_kill_timeout():
 	for host in hosts:
 		host.die()
 		Parasite.host_count -= 1
+		if Parasite.host_count == 0:
+			Parasite.next_level.emit()
 		added_length += 3
 	hosts.clear()
 	
@@ -118,3 +127,8 @@ func _on_dialogue_out_of_dialogue():
 		spawn()
 		fling(worm_speed)
 		dialogue.hide()
+
+
+func _on_death_timeout():
+	Parasite.death.emit()
+	dead = true

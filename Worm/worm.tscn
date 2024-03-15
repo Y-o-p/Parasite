@@ -18,6 +18,10 @@ one_shot = true
 wait_time = 3.0
 one_shot = true
 
+[node name="Death" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
 [node name="Dialogue" parent="." instance=ExtResource("3_rlope")]
 offset_top = -116.0
 offset_right = 1.0
@@ -26,6 +30,7 @@ dialogue = Array[String](["It is safe inside", "You are outgrowing your home", "
 
 [connection signal="timeout" from="StopForce" to="." method="_on_stop_force_timeout"]
 [connection signal="timeout" from="Kill" to="." method="_on_kill_timeout"]
+[connection signal="timeout" from="Death" to="." method="_on_death_timeout"]
 [connection signal="finished_line" from="Dialogue" to="." method="_on_dialogue_finished_line"]
 [connection signal="out_of_dialogue" from="Dialogue" to="." method="_on_dialogue_out_of_dialogue"]
 [connection signal="started_line" from="Dialogue" to="." method="_on_dialogue_started_line"]

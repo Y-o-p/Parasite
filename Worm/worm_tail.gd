@@ -46,5 +46,5 @@ func _on_added_length():
 		segments[i].set_collision_mask_value(0b10, collidable)
 		segments[i].set_collision_layer_value(0b1, collidable)
 		segments[i].speed = 10#i * 5 * speed_curve.sample(float(i) / len(segments))
-		print(segments[i].speed)
+
 
