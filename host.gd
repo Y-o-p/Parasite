@@ -16,10 +16,11 @@ enum State {
 
 var dir: Vector2 = Vector2(0, 0)
 var worm_dir_tangent: Vector2 = Vector2(0, 0)
+@export var noise: FastNoiseLite
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	pass
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -29,7 +30,10 @@ func _process(delta):
 	if eyes.is_colliding():
 		var is_worm = eyes.get_collider_rid() == Parasite.worm_rid
 		if is_worm:
-			worm_dir_tangent = (Parasite.worm_pos - global_position).orthogonal().normalized()
+			var t = Time.get_ticks_msec() / 10.0
+			var rand_x = noise.get_noise_2d(t, 0) * 500;
+			var rand_y = noise.get_noise_2d(0, t) * 500;
+			worm_dir_tangent = ((Parasite.worm_pos - global_position).orthogonal() + Vector2(rand_x, rand_y)).normalized()
 			dir = worm_dir_tangent
 			action = State.FEARFUL
 	
