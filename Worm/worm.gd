@@ -1,4 +1,4 @@
-extends Node
+extends Node2D
 
 var HEAD = preload("worm_head.tscn")
 var TAIL = preload("worm_tail.tscn")
@@ -21,6 +21,7 @@ var dead: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	visible = true
 	if gestating:
 		first_host = HOST.instantiate()
 		first_host.action = first_host.State.IDLE

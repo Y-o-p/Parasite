@@ -1,7 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://bj6ifpnks1yf4"]
+[gd_scene load_steps=3 format=3 uid="uid://bj6ifpnks1yf4"]
 
 [ext_resource type="Script" path="res://Camera.gd" id="1_og7ap"]
+[ext_resource type="Texture2D" uid="uid://tfxtvc6h0gv2" path="res://view.png" id="2_y4ogq"]
 
 [node name="Camera" type="Camera2D"]
 process_callback = 0
 script = ExtResource("1_og7ap")
+
+[node name="View" type="PointLight2D" parent="."]
+shadow_enabled = true
+texture = ExtResource("2_y4ogq")
+texture_scale = 36.96

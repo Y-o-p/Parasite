@@ -7,8 +7,8 @@ var tutorial = [
 ]
 
 var levels = [
+	preload("res://Levels/level_2.tscn"),
 	preload("res://Levels/level_1.tscn"),
-	preload("res://Levels/level_2.tscn")
 ]
 
 var max_time: float = 3.0

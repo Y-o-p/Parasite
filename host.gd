@@ -30,7 +30,7 @@ func _process(delta):
 	if eyes.is_colliding():
 		var is_worm = eyes.get_collider_rid() == Parasite.worm_rid
 		if is_worm:
-			var t = Time.get_ticks_msec() / 10.0
+			var t = Time.get_ticks_msec() / 100.0
 			var rand_x = noise.get_noise_2d(t, 0) * 500;
 			var rand_y = noise.get_noise_2d(0, t) * 500;
 			worm_dir_tangent = ((Parasite.worm_pos - global_position).orthogonal() + Vector2(rand_x, rand_y)).normalized()
