@@ -6,11 +6,13 @@ var HOST = preload("res://host.tscn")
 
 @onready var stop_force_timer: Timer = $StopForce
 @onready var death_timer: Timer = $Death
-var worm_speed = 6000
+var worm_speed = 10000
+var mouse_held = 0
 @onready var head: Polygon2D = $CollisionShape2D/Polygon2D
 @onready var camera: Camera2D = $Camera
 @onready var dialogue: Label = $Dialogue
 
+@export var spring: Curve
 var hosts = []
 var worm: RigidBody2D
 var gestating: bool = true
@@ -48,19 +50,25 @@ func _process(delta):
 	
 func _physics_process(delta):
 	if not gestating and not dead:
-		if Input.is_action_just_pressed("ui_right"):
-			unlatch()
 		if Input.is_action_just_released("fling") and stop_force_timer.is_stopped():
-			fling(worm_speed)
+			mouse_held = (Time.get_ticks_msec() - mouse_held) / 1000.0
+			var sample = spring.sample(mouse_held)
+			print(mouse_held, ", " + str(sample))
+			fling(worm_speed * sample)
 		if Input.is_action_just_pressed("squash"):
+			mouse_held = Time.get_ticks_msec()
+		if Input.is_action_pressed("squash"):
+			stop_force_timer.stop()
 			worm.tail.wiggle = Parasite.Wiggle.SQUASH
 		
 func fling(speed):
-	var dir: Vector2 = (worm.get_node("CollisionShape2D/Nose").global_position - worm.global_position).normalized()
-	var desired_dir: Vector2 = (worm.get_global_mouse_position() - worm.get_node("CollisionShape2D/Nose").global_position).normalized()
-	worm.tail.wiggle = Parasite.Wiggle.NONE
-	worm.add_constant_force(speed * len(worm.get_node("WormTail").segments) * desired_dir)
-	stop_force_timer.start()
+	if worm.latched_body == null:
+		var dir: Vector2 = (worm.get_node("CollisionShape2D/Nose").global_position - worm.global_position).normalized()
+		var desired_dir: Vector2 = (worm.get_global_mouse_position() - worm.get_node("CollisionShape2D/Nose").global_position).normalized()
+		_on_stop_force_timeout()
+		worm.tail.wiggle = Parasite.Wiggle.NONE
+		worm.add_constant_force(speed * len(worm.get_node("WormTail").segments) * desired_dir)
+		stop_force_timer.start()
 
 func _on_body_entered(body: PhysicsBody2D):
 	if body.get_collision_layer_value(0b10):
@@ -68,37 +76,22 @@ func _on_body_entered(body: PhysicsBody2D):
 
 func latch(body):
 	if worm.is_inside_tree() and not dead:
+		worm.constant_force = Vector2(0, 0)
 		death_timer.stop()
 		camera.target = body
-		var host_tail = TAIL.instantiate()
-		host_tail.latched_node = body
-		host_tail.wiggle = Parasite.Wiggle.OSCILLATE
-		host_tail.segment_count = len(worm.tail.segments)
-		host_tail.collidable = false
-		body.add_child(host_tail)
-		var entry_angle = body.global_position.angle_to_point(worm.contact_position)
-		host_tail.rotate(-PI/2.0 + entry_angle)
-		host_tail.latch(body)
 		hosts.append(body)
-		worm.set_deferred("freeze", true)
-		worm.get_node("WormTail").set_freeze(true)
-		#worm.set_freeze_mode(RigidBody2D.FREEZE_MODE_KINEMATIC)
-		#worm.set_freeze_enabled(true)
-		call_deferred("remove_child", worm)
+		worm.latch(body)
 		$Kill.start()
 
 func unlatch():
-	if len(hosts) > 0:
-		worm.global_position = hosts[-1].global_position
-	worm.set_deferred("freeze", false)
-	worm.get_node("WormTail").set_freeze(false)
-	add_child(worm)
+	worm.unlatch()
 	if Parasite.host_count > 0:
 		death_timer.start()
 	
 func _on_stop_force_timeout():
 	worm.constant_force = Vector2(0, 0)
-	worm.tail.wiggle = Parasite.Wiggle.NONE
+	if worm.latched_body == null:
+		worm.tail.wiggle = Parasite.Wiggle.NONE
 
 func _on_kill_timeout():
 	var added_length = 0

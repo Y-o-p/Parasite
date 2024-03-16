@@ -1,11 +1,17 @@
-[gd_scene load_steps=4 format=3 uid="uid://bb2f5olv1g3q6"]
+[gd_scene load_steps=5 format=3 uid="uid://bb2f5olv1g3q6"]
 
 [ext_resource type="Script" path="res://Worm/worm.gd" id="1_cbbke"]
 [ext_resource type="PackedScene" uid="uid://bj6ifpnks1yf4" path="res://camera.tscn" id="2_dc3rx"]
 [ext_resource type="PackedScene" uid="uid://b0qmqpek7g516" path="res://dialogue.tscn" id="3_rlope"]
 
+[sub_resource type="Curve" id="Curve_3y3m7"]
+_data = [Vector2(0, 0), 0.0, 2.00234, 0, 1, Vector2(0.251553, 0.503695), 2.25539, 2.25539, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
 [node name="Worm" type="Node2D"]
+z_index = 2
 script = ExtResource("1_cbbke")
+spring = SubResource("Curve_3y3m7")
 
 [node name="Camera" parent="." instance=ExtResource("2_dc3rx")]
 top_level = true
@@ -20,6 +26,7 @@ wait_time = 3.0
 one_shot = true
 
 [node name="Death" type="Timer" parent="."]
+process_mode = 4
 wait_time = 3.0
 one_shot = true
 

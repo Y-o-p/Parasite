@@ -3,7 +3,6 @@ extends Node
 @onready var animator: AnimationPlayer = $AnimationPlayer
 @onready var gray: ColorRect = $HUD/Gray
 @onready var hosts_left_label: Label = $HUD/SubViewportContainer/SubViewport/Control/HostsLeft
-@onready var time_remaining_label: Label = $HUD/SubViewportContainer/SubViewport/Control/TimeRemaining
 @onready var death_label: Label = $HUD/SubViewportContainer/SubViewport/Control/Death
 var game_over: bool = false
 var interp: float = 0
@@ -18,7 +17,6 @@ func _ready():
 
 func _process(delta):
 	hosts_left_label.text = "Hosts: " + str(Parasite.host_count)
-	time_remaining_label.text = "Time Remaining: " + str(Parasite.time_remaining)
 	"shader_parameter/gray_ratio"
 	if not game_over:
 		if Parasite.time_remaining == 0.0:

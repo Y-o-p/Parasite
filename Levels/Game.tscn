@@ -152,7 +152,9 @@ stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="HUD/SubViewportContainer"]
 transparent_bg = true
+handle_input_locally = false
 size = Vector2i(1920, 1080)
+render_target_update_mode = 4
 
 [node name="Camera2D" type="Camera2D" parent="HUD/SubViewportContainer/SubViewport"]
 enabled = false
@@ -179,14 +181,6 @@ theme_override_fonts/font = SubResource("SystemFont_6d3np")
 theme_override_font_sizes/font_size = 42
 text = "Hosts: 3"
 horizontal_alignment = 1
-
-[node name="TimeRemaining" type="Label" parent="HUD/SubViewportContainer/SubViewport/Control"]
-use_parent_material = true
-layout_mode = 1
-offset_right = 40.0
-offset_bottom = 23.0
-theme_override_font_sizes/font_size = 40
-text = "Time Remaining: 3.0"
 
 [node name="Death" type="Label" parent="HUD/SubViewportContainer/SubViewport/Control"]
 visible = false
