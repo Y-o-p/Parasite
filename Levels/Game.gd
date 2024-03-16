@@ -1,6 +1,9 @@
 extends Node
 
 @onready var animator: AnimationPlayer = $AnimationPlayer
+@onready var gray: ColorRect = $HUD/Gray
+var game_over: bool = false
+var interp: float = 0
 
 func _init():
 	Parasite.connect("next_level", on_next_level)
@@ -13,6 +16,14 @@ func _ready():
 func _process(delta):
 	$HUD/Control/HostsLeft.text = "Hosts: " + str(Parasite.host_count)
 	$HUD/Control/TimeRemaining.text = "Time Remaining: " + str(Parasite.time_remaining)
+	"shader_parameter/gray_ratio"
+	if not game_over:
+		if Parasite.time_remaining == 0.0:
+			interp = lerp(interp, 0.0, 0.03)
+		else:
+			interp = lerp(interp, (Parasite.max_time - Parasite.time_remaining) / Parasite.max_time, 0.08)
+	gray.material.set_shader_parameter("blur_amount", interp)
+	gray.material.set_shader_parameter("gray_ratio", interp)
 
 func _input(event):
 	if event.is_action_released("restart"):
@@ -20,6 +31,7 @@ func _input(event):
 
 func restart():
 	animator.play("RESET")
+	game_over = false
 	if Parasite.level != null:
 		remove_child(Parasite.level)
 	Parasite.level = Parasite.levels[Parasite.current_level].instantiate()
@@ -36,6 +48,7 @@ func next_level():
 
 func on_death():
 	animator.play("death")
+	game_over = true
 
 func on_next_level():
 	animator.play("next_level")

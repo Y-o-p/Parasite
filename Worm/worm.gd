@@ -43,7 +43,8 @@ func spawn():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	Parasite.time_remaining = death_timer.time_left
-	print(death_timer.time_left)
+	Parasite.max_time = death_timer.wait_time
+	
 	
 func _physics_process(delta):
 	if not gestating and not dead:

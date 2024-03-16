@@ -8,6 +8,7 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6br5m"]
 shader = ExtResource("2_8fpnp")
 shader_parameter/gray_ratio = 0.0
+shader_parameter/blur_amount = 0.0
 
 [sub_resource type="Animation" id="Animation_culvc"]
 resource_name = "next_level"
@@ -56,22 +57,10 @@ resource_name = "death"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Gray:material:shader_parameter/gray_ratio")
+tracks/0/path = NodePath("Control/Death:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, 1.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Control/Death:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -83,26 +72,26 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Gray:material:shader_parameter/gray_ratio")
+tracks/0/path = NodePath("Control/Death:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
+"update": 1,
+"values": [false]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Control/Death:visible")
+tracks/1/path = NodePath("Gray:material:shader_parameter/blur_amount")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
+"update": 0,
+"values": [0.0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_8lo4y"]
