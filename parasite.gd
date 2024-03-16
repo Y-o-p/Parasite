@@ -18,6 +18,9 @@ var current_level = -1
 var is_tutorial = false
 var host_count = -1
 var level
+var worm_pos: Vector2 = Vector2(0, 0)
+var gestating: bool = false
+var worm_rid
 
 signal next_level
 signal death
