@@ -6,6 +6,7 @@
 size = Vector2(242, 115)
 
 [node name="Table" type="RigidBody2D"]
+z_index = 1
 collision_layer = 4
 collision_mask = 23
 mass = 25.32

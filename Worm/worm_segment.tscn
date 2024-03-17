@@ -1,9 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://dntrbapmhk5ky"]
+[gd_scene load_steps=4 format=3 uid="uid://dntrbapmhk5ky"]
 
 [ext_resource type="Script" path="res://Worm/worm_segment.gd" id="1_tof58"]
+[ext_resource type="Texture2D" uid="uid://c6cox6k7rfdls" path="res://wormseg.png" id="2_60167"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jfj8w"]
-height = 50.0
+height = 62.0
 
 [node name="WormSegment" type="RigidBody2D"]
 collision_layer = 16
@@ -13,17 +14,16 @@ angular_damp = 4.447
 script = ExtResource("1_tof58")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 27)
+position = Vector2(0, 31)
 shape = SubResource("CapsuleShape2D_jfj8w")
 
-[node name="Polygon2D" type="Polygon2D" parent="CollisionShape2D"]
+[node name="Wormseg" type="Sprite2D" parent="CollisionShape2D"]
 position = Vector2(0, 1)
-scale = Vector2(1, 0.830882)
-color = Color(0.486275, 1, 1, 1)
-polygon = PackedVector2Array(-9, -34, 9, -34, 9, 34, -9, 34)
+rotation = 1.57079
+texture = ExtResource("2_60167")
 
 [node name="Tail" type="Node2D" parent="CollisionShape2D"]
-position = Vector2(0, 24)
+position = Vector2(0, 30)
 
 [node name="Joint" type="PinJoint2D" parent="."]
 node_b = NodePath("..")

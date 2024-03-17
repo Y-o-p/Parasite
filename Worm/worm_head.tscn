@@ -1,9 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://qdkg3cn5meyp"]
+[gd_scene load_steps=5 format=3 uid="uid://qdkg3cn5meyp"]
 
 [ext_resource type="PackedScene" uid="uid://drc1lwia5aj3d" path="res://Worm/worm_tail.tscn" id="1_5wqif"]
 [ext_resource type="Script" path="res://Worm/worm_head.gd" id="1_jbqrg"]
+[ext_resource type="Texture2D" uid="uid://jm0dex2wtqef" path="res://wormhead.png" id="2_o7qhn"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vag7m"]
+height = 22.0
 
 [node name="WormHead" type="RigidBody2D"]
 collision_mask = 6
@@ -18,15 +20,14 @@ script = ExtResource("1_jbqrg")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_vag7m")
 
-[node name="Polygon2D" type="Polygon2D" parent="CollisionShape2D"]
-position = Vector2(4.76837e-07, -1.90735e-06)
-scale = Vector2(1, 0.441176)
-color = Color(0.917647, 0.952941, 0, 1)
-polygon = PackedVector2Array(-9, -34, 9, -34, 9, 34, -9, 34)
+[node name="Wormhead" type="Sprite2D" parent="CollisionShape2D"]
+position = Vector2(0, -7)
+rotation = 1.57079
+texture = ExtResource("2_o7qhn")
 
 [node name="Nose" type="Node2D" parent="CollisionShape2D"]
 position = Vector2(0, -15)
 
 [node name="WormTail" parent="." node_paths=PackedStringArray("latched_node") instance=ExtResource("1_5wqif")]
-position = Vector2(0, 15)
+position = Vector2(0, 3)
 latched_node = NodePath("..")
