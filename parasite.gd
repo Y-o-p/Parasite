@@ -1,9 +1,21 @@
 extends Node
 
-var tutorial = [
-	"It is safe inside",
-	"You are outgrowing your home",
-	"On those nearby, FEED"
+var dialogue = [
+	[
+		"It is safe inside",
+		"You are outgrowing your home",
+		"On those nearby, feed"
+	],
+	[
+		"Scientists toast",
+		"'We did it!' they said with glee",
+		"Now, they will plea"
+	],
+	[
+		"Of course you did",
+		"Biological weapon",
+		"Think not, just kill"
+	],
 ]
 
 var levels = [

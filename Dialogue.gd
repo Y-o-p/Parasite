@@ -1,6 +1,6 @@
 extends Label
 
-@export var dialogue: Array[String] = [
+@export var dialogue: Array = [
 	"First Line",
 	"Second Line"
 ]
@@ -12,6 +12,7 @@ signal started_line
 signal finished_line
 
 func _ready():
+	dialogue = Parasite.dialogue[Parasite.current_level]
 	next_line()
 
 func _input(event):
