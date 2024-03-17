@@ -9,6 +9,7 @@ var tutorial = [
 var levels = [
 	preload("res://Levels/level_1.tscn"),
 	preload("res://Levels/level_2.tscn"),
+	preload("res://Levels/level_3.tscn"),
 ]
 
 var rng: RandomNumberGenerator = RandomNumberGenerator.new()

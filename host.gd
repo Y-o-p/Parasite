@@ -23,7 +23,7 @@ var worm_dir_tangent: Vector2 = Vector2(0, 0)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
+	global_rotation = Parasite.rng.randf_range(-PI, PI)
 
 
 func _physics_process(delta):
@@ -55,6 +55,10 @@ func _integrate_forces(state):
 		var angle_difference = -desired_dir.angle_to($Facing.global_position - global_position)
 		state.set_angular_velocity(2 * angle_difference)
 		state.apply_force(150000 * desired_dir)
+	if action == State.PAIN:
+		var t = Time.get_ticks_msec() / 100.0
+		var perlin = noise.get_noise_1d(t) * 3;
+		state.set_angular_velocity(perlin)
 	
 
 func die():

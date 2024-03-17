@@ -4,6 +4,8 @@ var HEAD = preload("worm_head.tscn")
 var TAIL = preload("worm_tail.tscn")
 var HOST = preload("res://host.tscn")
 var BLOOD = preload("res://blood.tscn")
+var PUKE = preload("res://puke.tscn")
+var host_ill_sprite = preload("res://hostill.png")
 
 @onready var stop_force_timer: Timer = $StopForce
 @onready var death_timer: Timer = $Death
@@ -26,7 +28,10 @@ func _ready():
 	visible = true
 	if gestating:
 		first_host = HOST.instantiate()
-		first_host.action = first_host.State.IDLE
+		first_host.global_position = global_position
+		first_host.get_node("Torso").texture = host_ill_sprite
+		first_host.action = first_host.State.PAIN
+		first_host.top_level = true
 		#first_host.get_node("Man").modulate = Color(0, 1, 0)
 		add_child(first_host)
 		
@@ -43,7 +48,9 @@ func spawn():
 	camera.desired_size = 1
 	worm.tail.set_deferred("wiggle_speed", 15)
 	gestating = false
-	remove_child(first_host)
+	first_host.die()
+	var blood = make_blood(first_host.global_position)
+	first_host.add_child(blood)
 	death_timer.start()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -61,8 +68,9 @@ func _physics_process(delta):
 			fling(worm_speed * sample)
 		if Input.is_action_just_pressed("squash"):
 			mouse_held = Time.get_ticks_msec()
-		if Input.is_action_pressed("squash"):
 			stop_force_timer.stop()
+			_on_stop_force_timeout()
+		if Input.is_action_pressed("squash") and len(hosts) == 0:
 			worm.tail.wiggle = Parasite.Wiggle.SQUASH
 		
 func fling(speed):
@@ -116,12 +124,16 @@ func _on_kill_timeout():
 	fling(worm_speed * 1.5)
 
 func _on_dialogue_finished_line():
-	pass
-	#camera.desired_size += 0.2
+	var puke = PUKE.instantiate()
+	puke.top_level = true
+	puke.global_position = first_host.global_position
+	puke.global_rotation = first_host.global_rotation
+	first_host.add_child(puke)
 
 func _on_dialogue_started_line():
 	if camera != null:
 		camera.desired_size += 0.2
+
 
 func _on_dialogue_out_of_dialogue():
 	if gestating:
@@ -134,11 +146,13 @@ func _on_death_timeout():
 	Parasite.death.emit()
 	dead = true
 
-
-func _on_blood_timeout():
+func make_blood(pos):
 	var blood = BLOOD.instantiate()
 	blood.top_level = true
-	blood.global_position = hosts[-1].global_position
+	blood.global_position = pos
 	blood.global_rotation = Parasite.rng.randf_range(-PI, PI)
-	
+	return blood
+
+func _on_blood_timeout():
+	var blood = make_blood(hosts[-1].global_position)
 	hosts[-1].add_child(blood)

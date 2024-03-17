@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bc27xe1k0kkew"]
+
+[ext_resource type="Texture2D" uid="uid://c3ftmh2yiy6g2" path="res://puke.png" id="1_vfuou"]
+
+[node name="Puke" type="Node2D"]
+
+[node name="Puke" type="Sprite2D" parent="."]
+z_as_relative = false
+position = Vector2(85, 5)
+texture = ExtResource("1_vfuou")
