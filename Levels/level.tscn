@@ -157,6 +157,7 @@ tile_set = SubResource("TileSet_4dq6d")
 format = 2
 layer_0/name = "Walls"
 layer_1/name = "Entities"
+layer_1/z_index = 2
 layer_1/tile_data = PackedInt32Array()
 script = ExtResource("3_sfyxt")
 

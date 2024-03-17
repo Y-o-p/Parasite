@@ -14,7 +14,6 @@ script = ExtResource("1_cbbke")
 spring = SubResource("Curve_3y3m7")
 
 [node name="Camera" parent="." instance=ExtResource("2_dc3rx")]
-top_level = true
 
 [node name="StopForce" type="Timer" parent="."]
 process_callback = 0
@@ -30,6 +29,9 @@ process_mode = 4
 wait_time = 3.0
 one_shot = true
 
+[node name="Blood" type="Timer" parent="."]
+wait_time = 0.7
+
 [node name="Dialogue" parent="." instance=ExtResource("3_rlope")]
 offset_top = -116.0
 offset_right = 1.0
@@ -39,6 +41,7 @@ dialogue = Array[String](["It is safe inside", "You are outgrowing your home", "
 [connection signal="timeout" from="StopForce" to="." method="_on_stop_force_timeout"]
 [connection signal="timeout" from="Kill" to="." method="_on_kill_timeout"]
 [connection signal="timeout" from="Death" to="." method="_on_death_timeout"]
+[connection signal="timeout" from="Blood" to="." method="_on_blood_timeout"]
 [connection signal="finished_line" from="Dialogue" to="." method="_on_dialogue_finished_line"]
 [connection signal="out_of_dialogue" from="Dialogue" to="." method="_on_dialogue_out_of_dialogue"]
 [connection signal="started_line" from="Dialogue" to="." method="_on_dialogue_started_line"]

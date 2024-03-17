@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://dfrpxky7rqwe4"]
+
+[ext_resource type="Texture2D" uid="uid://cacvn1vqvvy72" path="res://table.png" id="1_nijwb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bucfx"]
+size = Vector2(242, 115)
+
+[node name="Table" type="RigidBody2D"]
+collision_layer = 4
+collision_mask = 23
+mass = 25.32
+linear_damp = 25.097
+angular_damp = 27.545
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_bucfx")
+
+[node name="Stool" type="Sprite2D" parent="."]
+texture = ExtResource("1_nijwb")

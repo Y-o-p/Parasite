@@ -3,9 +3,11 @@ extends Node2D
 var HEAD = preload("worm_head.tscn")
 var TAIL = preload("worm_tail.tscn")
 var HOST = preload("res://host.tscn")
+var BLOOD = preload("res://blood.tscn")
 
 @onready var stop_force_timer: Timer = $StopForce
 @onready var death_timer: Timer = $Death
+@onready var blood_timer: Timer = $Blood
 var worm_speed = 10000
 var mouse_held = 0
 @onready var head: Polygon2D = $CollisionShape2D/Polygon2D
@@ -25,7 +27,7 @@ func _ready():
 	if gestating:
 		first_host = HOST.instantiate()
 		first_host.action = first_host.State.IDLE
-		first_host.get_node("Man").modulate = Color(0, 1, 0)
+		#first_host.get_node("Man").modulate = Color(0, 1, 0)
 		add_child(first_host)
 		
 		camera.target = first_host
@@ -85,9 +87,11 @@ func latch(body):
 		hosts.append(body)
 		worm.latch(body)
 		$Kill.start()
+		blood_timer.start()
 
 func unlatch():
 	worm.unlatch()
+	blood_timer.stop()
 	if Parasite.host_count > 0:
 		death_timer.start()
 	
@@ -129,3 +133,12 @@ func _on_dialogue_out_of_dialogue():
 func _on_death_timeout():
 	Parasite.death.emit()
 	dead = true
+
+
+func _on_blood_timeout():
+	var blood = BLOOD.instantiate()
+	blood.top_level = true
+	blood.global_position = hosts[-1].global_position
+	blood.global_rotation = Parasite.rng.randf_range(-PI, PI)
+	
+	hosts[-1].add_child(blood)

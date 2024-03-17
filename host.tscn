@@ -1,16 +1,17 @@
 [gd_scene load_steps=5 format=3 uid="uid://lg7ffl58nx44"]
 
 [ext_resource type="Script" path="res://host.gd" id="1_f55bx"]
-[ext_resource type="Texture2D" uid="uid://d2u3vq2x4bggu" path="res://man.png" id="2_jc1ef"]
+[ext_resource type="Texture2D" uid="uid://cveudci0liwic" path="res://torso.png" id="2_e0joa"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_5mj2r"]
 noise_type = 3
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_v2pys"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8se8c"]
 radius = 36.0
-height = 126.0
+height = 96.0
 
 [node name="Host" type="RigidBody2D"]
+z_index = 2
 collision_layer = 2
 collision_mask = 7
 mass = 51.48
@@ -21,15 +22,20 @@ script = ExtResource("1_f55bx")
 noise = SubResource("FastNoiseLite_5mj2r")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CapsuleShape2D_v2pys")
-
-[node name="Man" type="Sprite2D" parent="."]
-position = Vector2(0, 24)
-scale = Vector2(0.236928, 0.236928)
-texture = ExtResource("2_jc1ef")
+shape = SubResource("CapsuleShape2D_8se8c")
+metadata/_edit_lock_ = true
 
 [node name="Eyes" type="RayCast2D" parent="."]
+top_level = true
 collision_mask = 5
 
 [node name="Direction" type="RayCast2D" parent="."]
+top_level = true
+target_position = Vector2(0, 100)
 collision_mask = 6
+
+[node name="Torso" type="Sprite2D" parent="."]
+texture = ExtResource("2_e0joa")
+
+[node name="Facing" type="Node2D" parent="."]
+position = Vector2(1, 0)

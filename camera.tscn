@@ -8,6 +8,7 @@ process_callback = 0
 script = ExtResource("1_og7ap")
 
 [node name="View" type="PointLight2D" parent="."]
+blend_mode = 2
 shadow_enabled = true
 texture = ExtResource("2_y4ogq")
 texture_scale = 36.96

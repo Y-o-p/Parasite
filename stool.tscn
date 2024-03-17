@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://mnfm5iicv28y"]
+
+[ext_resource type="Texture2D" uid="uid://c3cxwsldafvqn" path="res://stool.png" id="1_rhm8i"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_47uy1"]
+radius = 44.0
+
+[node name="Stool" type="RigidBody2D"]
+collision_layer = 4
+collision_mask = 23
+mass = 19.34
+linear_damp = 1.224
+angular_damp = 0.612
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_47uy1")
+
+[node name="Stool" type="Sprite2D" parent="."]
+texture = ExtResource("1_rhm8i")

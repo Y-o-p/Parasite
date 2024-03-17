@@ -7,10 +7,11 @@ var tutorial = [
 ]
 
 var levels = [
-	preload("res://Levels/level_2.tscn"),
 	preload("res://Levels/level_1.tscn"),
+	preload("res://Levels/level_2.tscn"),
 ]
 
+var rng: RandomNumberGenerator = RandomNumberGenerator.new()
 var max_time: float = 3.0
 var time_remaining: float = 3.0
 
